@@ -1,139 +1,139 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 class PythonPage1 extends StatefulWidget {
-  const PythonPage1({Key? key}) : super(key: key);
+  const PythonPage1({super.key});
 
   @override
-  State<PythonPage1> createState() => _PythonPage1State();
+  PythonPage1State createState() => PythonPage1State();
 }
 
-class _PythonPage1State extends State<PythonPage1> {
-  final List<String> draggableTexts = ['World', 'Hello'];
-  List<String?> droppedTexts = [null, null];
+class PythonPage1State extends State<PythonPage1> {
+  // Define controllers for DragTarget
+  final List<String> dragData = ["", ""];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+      appBar: AppBar(
+        title: const Text("Chapter: Basics"),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Padding(
-              padding: EdgeInsets.all(20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'CHAPTER: BASICS',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
-                  Text('Say Hello!'),
-                  SizedBox(height: 10),
-                  Text('Write your first program and print the words'),
-                  Text("'Hello World' using Python."),
-                ],
-              ),
+            // Header
+            const Text(
+              "Hello! Write your first program and print the words 'Hello world' using Python.",
+              style: TextStyle(fontSize: 18),
             ),
+
+            // DragTarget Row
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('print("'),
-                Container(
-                  padding: const EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                  ),
-                  // Adding semantics to make purpose clear to screen readers
-                  child: Semantics(
-                    label: droppedTexts[0] ?? '',
-                    child: Text(droppedTexts[0] ?? ''),
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                  ),
-                  // Adding semantics to make purpose clear to screen readers
-                  child: Semantics(
-                    label: droppedTexts[1] ?? '',
-                    child: Text(droppedTexts[1] ?? ''),
-                  ),
-                ),
-                const Text('")'),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text('Choices:'),
-                  ElevatedButton(
-                    onPressed: () {
+                Expanded(
+                  child: DragTarget<String>(
+                    builder: (context, candidateData, rejectedData) {
+                      return Container(
+                        height: 100,
+                        color: Colors.grey,
+                        alignment: Alignment.center,
+                        child: Text(dragData[0]),
+                      );
+                    },
+                    onAccept: (data) {
                       setState(() {
-                        droppedTexts = [null, null];
+                        dragData[0] = data;
                       });
                     },
-                    child: const Text('RESET'),
                   ),
-                ],
-              ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: DragTarget<String>(
+                    builder: (context, candidateData, rejectedData) {
+                      return Container(
+                        height: 100,
+                        color: Colors.grey,
+                        alignment: Alignment.center,
+                        child: Text(dragData[1]),
+                      );
+                    },
+                    onAccept: (data) {
+                      setState(() {
+                        dragData[1] = data;
+                      });
+                    },
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 20),
-            Expanded(
-              child: GridView.count(
-                crossAxisCount: 2,
-                padding: const EdgeInsets.all(20.0),
-                children: draggableTexts
-                    .map(
-                      (text) => Draggable<String>(
-                        data: text,
-                        feedback: Container(
-                          padding: const EdgeInsets.all(8.0),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.blue),
-                          ),
-                          child: Text(text),
-                        ),
-                        childWhenDragging: const SizedBox(
-                          height: 30,
-                          width: 50,
-                        ),
-                        child: DragTarget<String>(
-                          builder: (context, candidateData, rejectedData) =>
-                              Container(
-                            padding: const EdgeInsets.all(8.0),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                            ),
-                            child: Text(
-                              text,
-                              // Adding semantics to make purpose clear to screen readers
-                              semanticsLabel: 'draggableText$text',
-                            ),
-                          ),
-                          onAccept: (data) {
-                            setState(() {
-                              droppedTexts[droppedTexts.indexOf(null)] = data;
-                              // Announcing the drop to screen readers
-                              final announcement = 'Dragged $data';
-                              SemanticsService.announce(
-                                  announcement, TextDirection.ltr);
-                              // You can also use a SnackBar for visual feedback
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(announcement),
-                                ),
-                              );
-                            });
-                          },
-                        ),
-                      ),
-                    )
-                    .toList(),
-              ),
+
+            // Return Choice Row
+            Row(
+              children: [
+                const Text("Return Choice:"),
+                const Spacer(),
+                ElevatedButton(
+                  onPressed: () {
+                    // Reset button functionality
+                    setState(() {
+                      dragData[0] = "";
+                      dragData[1] = "";
+                    });
+                  },
+                  child: const Text("Reset"),
+                ),
+              ],
+            ),
+
+            // Draggable Widgets
+            Row(
+              children: [
+                Draggable<String>(
+                  data: "hello",
+                  feedback: Container(
+                    height: 50,
+                    width: 100,
+                    color: Colors.blue.withOpacity(0.5),
+                    alignment: Alignment.center,
+                    child: const Text("hello"),
+                  ),
+                  childWhenDragging: const SizedBox(
+                    height: 50,
+                    width: 100,
+                  ),
+                  child: Container(
+                    height: 50,
+                    width: 100,
+                    color: Colors.blue,
+                    alignment: Alignment.center,
+                    child: const Text("hello"),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Draggable<String>(
+                  data: "world",
+                  feedback: Container(
+                    height: 50,
+                    width: 100,
+                    color: Colors.green.withOpacity(0.5),
+                    alignment: Alignment.center,
+                    child: const Text("world"),
+                  ),
+                  childWhenDragging: const SizedBox(
+                    height: 50,
+                    width: 100,
+                  ),
+                  child: Container(
+                    height: 50,
+                    width: 100,
+                    color: Colors.green,
+                    alignment: Alignment.center,
+                    child: const Text("world"),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
