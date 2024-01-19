@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class PythonPage1 extends StatefulWidget {
-  const PythonPage1({super.key});
+  const PythonPage1({Key? key}) : super(key: key);
 
   @override
   PythonPage1State createState() => PythonPage1State();
@@ -22,58 +22,40 @@ class PythonPage1State extends State<PythonPage1> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Header
+            // Introduction
             const Text(
-              "Hello! Write your first program and print the words 'Hello world' using Python.",
-              style: TextStyle(fontSize: 18),
+              "Welcome to your first Python chapter!\n"
+              "You're about to print your first 'Hello World' in Python. "
+              "Drag and drop the words inside the brackets below to complete the code.",
+              style: TextStyle(fontSize: 14),
+            ),
+            const SizedBox(height: 10),
+
+            // Print Statement with White Boxes
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text("print("),
+                      _buildDragTarget(0),
+                      const Text(", "),
+                      _buildDragTarget(1),
+                      const Text(")"),
+                    ],
+                  ),
+                ],
+              ),
             ),
 
-            // DragTarget Row
+            // Row for Return Choice and Reset Button
             Row(
-              children: [
-                Expanded(
-                  child: DragTarget<String>(
-                    builder: (context, candidateData, rejectedData) {
-                      return Container(
-                        height: 100,
-                        color: Colors.grey,
-                        alignment: Alignment.center,
-                        child: Text(dragData[0]),
-                      );
-                    },
-                    onAccept: (data) {
-                      setState(() {
-                        dragData[0] = data;
-                      });
-                    },
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: DragTarget<String>(
-                    builder: (context, candidateData, rejectedData) {
-                      return Container(
-                        height: 100,
-                        color: Colors.grey,
-                        alignment: Alignment.center,
-                        child: Text(dragData[1]),
-                      );
-                    },
-                    onAccept: (data) {
-                      setState(() {
-                        dragData[1] = data;
-                      });
-                    },
-                  ),
-                ),
-              ],
-            ),
-
-            // Return Choice Row
-            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text("Return Choice:"),
-                const Spacer(),
                 ElevatedButton(
                   onPressed: () {
                     // Reset button functionality
@@ -87,55 +69,72 @@ class PythonPage1State extends State<PythonPage1> {
               ],
             ),
 
+            const SizedBox(height: 10),
+
             // Draggable Widgets
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Draggable<String>(
-                  data: "hello",
-                  feedback: Container(
-                    height: 50,
-                    width: 100,
-                    color: Colors.blue.withOpacity(0.5),
-                    alignment: Alignment.center,
-                    child: const Text("hello"),
-                  ),
-                  childWhenDragging: const SizedBox(
-                    height: 50,
-                    width: 100,
-                  ),
-                  child: Container(
-                    height: 50,
-                    width: 100,
-                    color: Colors.blue,
-                    alignment: Alignment.center,
-                    child: const Text("hello"),
-                  ),
-                ),
+                _buildDraggable("hello", 0),
                 const SizedBox(width: 16),
-                Draggable<String>(
-                  data: "world",
-                  feedback: Container(
-                    height: 50,
-                    width: 100,
-                    color: Colors.green.withOpacity(0.5),
-                    alignment: Alignment.center,
-                    child: const Text("world"),
-                  ),
-                  childWhenDragging: const SizedBox(
-                    height: 50,
-                    width: 100,
-                  ),
-                  child: Container(
-                    height: 50,
-                    width: 100,
-                    color: Colors.green,
-                    alignment: Alignment.center,
-                    child: const Text("world"),
-                  ),
-                ),
+                _buildDraggable("world", 1),
               ],
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDragTarget(int index) {
+    return Expanded(
+      child: DragTarget<String>(
+        builder: (context, candidateData, rejectedData) {
+          return Container(
+            height: 50,
+            width: 80,
+            color: Colors.white,
+            alignment: Alignment.center,
+            child: Text(
+              dragData[index],
+              style: const TextStyle(fontSize: 16, color: Colors.black),
+            ),
+          );
+        },
+        onAccept: (data) {
+          setState(() {
+            dragData[index] = data;
+          });
+        },
+      ),
+    );
+  }
+
+  Widget _buildDraggable(String data, int index) {
+    return Draggable<String>(
+      data: data,
+      feedback: Container(
+        height: 40,
+        width: 60,
+        color: Colors.white,
+        alignment: Alignment.center,
+        child: Text(
+          data,
+          style: const TextStyle(fontSize: 16, color: Colors.black),
+        ),
+      ),
+      childWhenDragging: const SizedBox(
+        height: 40,
+        width: 60,
+      ),
+      child: Container(
+        height: 40,
+        width: 60,
+        color: Colors.white,
+        alignment: Alignment.center,
+        child: Text(
+          data,
+          style: const TextStyle(fontSize: 16, color: Colors.black),
         ),
       ),
     );
