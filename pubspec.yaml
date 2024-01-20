@@ -39,6 +39,7 @@ dependencies:
   flutter_riverpod: ^2.4.9
   styled_widget: ^0.4.1
   tutorial: ^1.0.9
+  google_fonts: ^6.1.0
 
 dev_dependencies:
   flutter_test:
