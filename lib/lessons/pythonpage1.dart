@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pylearnplay/theory/theory_1.dart';
 
 class PythonPage1 extends StatefulWidget {
   const PythonPage1({Key? key}) : super(key: key);
@@ -8,11 +9,13 @@ class PythonPage1 extends StatefulWidget {
 }
 
 class PythonPage1State extends State<PythonPage1> {
-  // Define controllers for DragTarget
   final List<String> dragData = ["", ""];
 
   @override
   Widget build(BuildContext context) {
+    bool isHelloWorldSuccessful =
+        dragData[0] == "hello" && dragData[1] == "world";
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Chapter: Basics"),
@@ -22,43 +25,46 @@ class PythonPage1State extends State<PythonPage1> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Introduction
             const Text(
               "Welcome to your first Python chapter!\n"
               "You're about to print your first 'Hello World' in Python. "
               "Drag and drop the words inside the brackets below to complete the code.",
               style: TextStyle(fontSize: 14),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
 
-            // Print Statement with White Boxes
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 5),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text("print("),
+                      const Text(
+                        "print(",
+                        style: TextStyle(fontSize: 18),
+                      ),
                       _buildDragTarget(0),
                       const Text(", "),
                       _buildDragTarget(1),
-                      const Text(")"),
+                      const Text(
+                        ")",
+                        style: TextStyle(fontSize: 18),
+                      ),
                     ],
                   ),
                 ],
               ),
             ),
 
-            // Row for Return Choice and Reset Button
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text("Return Choice:"),
+                const Spacer(),
                 ElevatedButton(
                   onPressed: () {
-                    // Reset button functionality
                     setState(() {
                       dragData[0] = "";
                       dragData[1] = "";
@@ -71,7 +77,6 @@ class PythonPage1State extends State<PythonPage1> {
 
             const SizedBox(height: 10),
 
-            // Draggable Widgets
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -80,6 +85,24 @@ class PythonPage1State extends State<PythonPage1> {
                 _buildDraggable("world", 1),
               ],
             ),
+
+            // Congratulatory Message
+            if (isHelloWorldSuccessful)
+              ElevatedButton(
+                onPressed: () {
+                  // Show congratulatory message
+                  _showCongratulatoryMessage(context);
+
+                  // After showing message, navigate to Theory1 page
+                  Future.delayed(const Duration(seconds: 2), () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Theory1()),
+                    );
+                  });
+                },
+                child: const Text("Finish"),
+              ),
           ],
         ),
       ),
@@ -91,13 +114,13 @@ class PythonPage1State extends State<PythonPage1> {
       child: DragTarget<String>(
         builder: (context, candidateData, rejectedData) {
           return Container(
-            height: 50,
-            width: 80,
+            height: 60,
+            width: 100,
             color: Colors.white,
             alignment: Alignment.center,
             child: Text(
               dragData[index],
-              style: const TextStyle(fontSize: 16, color: Colors.black),
+              style: const TextStyle(fontSize: 18, color: Colors.black),
             ),
           );
         },
@@ -137,6 +160,28 @@ class PythonPage1State extends State<PythonPage1> {
           style: const TextStyle(fontSize: 16, color: Colors.black),
         ),
       ),
+    );
+  }
+
+  // Function to show congratulatory message
+  void _showCongratulatoryMessage(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Congratulations!"),
+          content: const Text(
+              "You've successfully printed 'Hello World' in Python!"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("OK"),
+            ),
+          ],
+        );
+      },
     );
   }
 }
