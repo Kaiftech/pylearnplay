@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:pylearnplay/lessons/pythonpage2.dart';
+import 'package:pylearnplay/lessons/pythonpage3.dart';
 
-class Theory1 extends StatelessWidget {
-  const Theory1({Key? key}) : super(key: key);
+class Theory2 extends StatelessWidget {
+  const Theory2({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Hello World - Theory"),
+        title: const Text("Variables - Theory"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -17,7 +17,7 @@ class Theory1 extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const Text(
-                "Theory: Hello World in Python",
+                "Theory: Variables in Python",
                 style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -25,12 +25,12 @@ class Theory1 extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               const Text(
-                "In programming, the 'Hello World' program is a simple program that outputs or displays the message 'Hello, World!' on the screen. It is often used as a beginner's first program to illustrate the basic syntax and structure of a programming language.",
+                "In Python, a variable is a named storage location used to store data. Think of it as a label attached to a value, allowing you to refer to the value by its name.",
                 style: TextStyle(fontSize: 18, color: Colors.black87),
               ),
               const SizedBox(height: 20),
               const Text(
-                "Here's a basic 'Hello World' program in Python:",
+                "Here's how you can declare and use a variable:",
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -41,7 +41,7 @@ class Theory1 extends StatelessWidget {
                 padding: const EdgeInsets.all(20),
                 color: Colors.grey[200],
                 child: const Text(
-                  "print('Hello, World!')",
+                  "variable = 42\nprint(variable)",
                   style: TextStyle(
                       fontSize: 20,
                       fontFamily: 'monospace',
@@ -58,20 +58,20 @@ class Theory1 extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               const Text(
-                "1. 'print' is a built-in function in Python used to display messages on the console.",
+                "1. 'variable' is the name of the variable.",
                 style: TextStyle(fontSize: 18, color: Colors.black87),
               ),
               const Text(
-                "2. The text 'Hello, World!' is enclosed in single quotes (') and is known as a string.",
+                "2. '=' is the assignment operator, used to assign a value to the variable.",
                 style: TextStyle(fontSize: 18, color: Colors.black87),
               ),
               const Text(
-                "3. The entire statement is enclosed in parentheses, indicating the argument passed to the 'print' function.",
+                "3. '42' is the value assigned to the variable.",
                 style: TextStyle(fontSize: 18, color: Colors.black87),
               ),
               const SizedBox(height: 20),
               const Text(
-                "Running this program will output 'Hello, World!' to the console.",
+                "Running this program will output '42' to the console.",
                 style: TextStyle(fontSize: 18, color: Colors.black87),
               ),
               ElevatedButton(
@@ -80,7 +80,7 @@ class Theory1 extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const PythonPage2()),
+                        builder: (context) => const PythonPage3()),
                   );
                 },
                 child: const Text('Next Page: PythonPage2'),
