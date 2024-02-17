@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:pylearnplay/theory/theory_3.dart';
+import 'package:pylearnplay/theory/theory_4.dart';
 
-class PythonPage3 extends StatefulWidget {
-  const PythonPage3({Key? key}) : super(key: key);
+class PythonPage4 extends StatefulWidget {
+  const PythonPage4({Key? key}) : super(key: key);
 
   @override
-  PythonPage3State createState() => PythonPage3State();
+  PythonPage4State createState() => PythonPage4State();
 }
 
-class PythonPage3State extends State<PythonPage3> {
+class PythonPage4State extends State<PythonPage4> {
   final List<String> dragData = [
     ""
   ]; // Only one element for the single blank box
@@ -27,7 +27,7 @@ class PythonPage3State extends State<PythonPage3> {
           children: [
             const Text(
               "Guess the data type of the variable:\n"
-              "variable = 42",
+              "variable = 'Hello'",
               style: TextStyle(fontSize: 16),
             ),
             const SizedBox(height: 10),
@@ -41,7 +41,7 @@ class PythonPage3State extends State<PythonPage3> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
-                        "variable = 42\n"
+                        "variable = 'Hello'\n"
                         "data type = ",
                         style: TextStyle(fontSize: 18),
                       ),
@@ -155,7 +155,7 @@ class PythonPage3State extends State<PythonPage3> {
 
   // Function to check if the user's guess is correct
   bool _isCorrect() {
-    return dragData[0] == "int";
+    return dragData[0] == "str";
   }
 
   void _showCongratulatoryMessage(BuildContext context) {
@@ -172,7 +172,7 @@ class PythonPage3State extends State<PythonPage3> {
                 // Navigate to theory_3.dart
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const Theory3Page()),
+                  MaterialPageRoute(builder: (context) => const Theory4Page()),
                 );
               },
               child: const Text("OK"),
