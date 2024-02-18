@@ -10,34 +10,71 @@ class PythonPage1 extends StatefulWidget {
 
 class PythonPage1State extends State<PythonPage1> {
   final List<String> dragData = ["", ""];
+  bool isMascotVisible = false;
 
   @override
   Widget build(BuildContext context) {
-    bool isHelloWorldSuccessful =
+    final isHelloWorldSuccessful =
         dragData[0] == "hello" && dragData[1] == "world";
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Chapter: Basics"),
+        title: const Text(
+          "Chapter: Basics",
+          style: TextStyle(
+            color: Color(0xFFFFFFFF),
+          ),
+        ),
+        backgroundColor: const Color(0xFF4285F4),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const Text(
-              "Welcome to your first Python chapter!\n"
-              "You're about to print your first 'Hello World' in Python. "
-              "Drag and drop the words inside the brackets below to complete the code.",
-              style: TextStyle(fontSize: 14),
-            ),
-            const SizedBox(height: 5),
-
-            Expanded(
-              child: Column(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // Instructions with playful mascot
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 5),
+                  Text(
+                    "🌟", // Updated playful mascot emoji
+                    style: TextStyle(
+                      fontSize: 40,
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Flexible(
+                    child: Text(
+                      "Welcome to your first Python chapter!\n"
+                      "You're about to print your first 'Hello World' in Python. "
+                      "Drag and drop the words inside the brackets below to complete the code.",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Color(0xFF4285F4),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Text(
+                    "🎉", // Celebration emoji
+                    style: TextStyle(
+                      fontSize: 24,
+                      color: Colors.green,
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 10),
+
+              // Draggable text with light animations
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 10),
+
+                  // Print statement
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -56,54 +93,77 @@ class PythonPage1State extends State<PythonPage1> {
                   ),
                 ],
               ),
-            ),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text("Return Choice:"),
-                const Spacer(),
+              // Reset button with playful icon
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton.icon(
+                    onPressed: () {
+                      setState(() {
+                        dragData[0] = "";
+                        dragData[1] = "";
+                        isMascotVisible = false;
+                      });
+                    },
+                    icon: const Icon(Icons.replay,
+                        color: Colors.red), // Rewind symbol
+                    label: const Text("Reset"),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 20),
+
+              // Draggable items
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _buildDraggable("hello", 0),
+                  const SizedBox(width: 16),
+                  _buildDraggable("world", 1),
+                ],
+              ),
+
+              // Finish button with celebration animation
+              if (isHelloWorldSuccessful)
                 ElevatedButton(
                   onPressed: () {
                     setState(() {
-                      dragData[0] = "";
-                      dragData[1] = "";
+                      isMascotVisible = true;
+                    });
+
+                    // Show congratulatory message
+                    _showCongratulatoryMessage(context);
+
+                    // Navigate to next screen
+                    Future.delayed(const Duration(seconds: 2), () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Theory1()),
+                      );
                     });
                   },
-                  child: const Text("Reset"),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF4285F4),
+                  ),
+                  child: const Text("Finish"),
                 ),
-              ],
-            ),
 
-            const SizedBox(height: 10),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _buildDraggable("hello", 0),
-                const SizedBox(width: 16),
-                _buildDraggable("world", 1),
-              ],
-            ),
-
-            // Congratulatory Message
-            if (isHelloWorldSuccessful)
-              ElevatedButton(
-                onPressed: () {
-                  // Show congratulatory message
-                  _showCongratulatoryMessage(context);
-
-                  // After showing message, navigate to Theory1 page
-                  Future.delayed(const Duration(seconds: 2), () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const Theory1()),
-                    );
-                  });
-                },
-                child: const Text("Finish"),
+              // Playful mascot visibility
+              Visibility(
+                visible: isMascotVisible,
+                child: const Text(
+                  "🥳", // Celebration emoji
+                  style: TextStyle(
+                    fontSize: 40,
+                    color: Colors.green,
+                  ),
+                ),
               ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -163,15 +223,23 @@ class PythonPage1State extends State<PythonPage1> {
     );
   }
 
-  // Function to show congratulatory message
   void _showCongratulatoryMessage(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text("Congratulations!"),
+          title: const Text(
+            "Congratulations!",
+            style: TextStyle(
+              color: Color(0xFF4285F4),
+            ),
+          ),
           content: const Text(
-              "You've successfully printed 'Hello World' in Python!"),
+            "You've successfully printed 'Hello World' in Python!",
+            style: TextStyle(
+              color: Colors.black,
+            ),
+          ),
           actions: [
             TextButton(
               onPressed: () {

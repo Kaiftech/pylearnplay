@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "999555455547",
+    "project_id": "pylearnplay-76d50",
+    "storage_bucket": "pylearnplay-76d50.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:999555455547:android:2a19f103dd7d1eb531da1e",
+        "android_client_info": {
+          "package_name": "com.example.pylearnplay"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCV6A-u_gsxtymZpD0eTr6WLRfXKQnpko"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

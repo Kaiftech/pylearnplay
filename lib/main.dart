@@ -1,5 +1,11 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter/material.dart';
 import 'pages/auth_page.dart';
+import 'package:pylearnplay/theory/theory_6.dart';
+import 'package:pylearnplay/lessons/pythonpage1.dart';
+import 'package:pylearnplay/lessons/pythonpage3.dart';
+import 'package:pylearnplay/lessons/pythonpage4.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +25,7 @@ class AppState extends State<App> {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'PyLearnPlay',
-      home: AuthPage(),
+      home: PythonPage1(),
     );
   }
 }

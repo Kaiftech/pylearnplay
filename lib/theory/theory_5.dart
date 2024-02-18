@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:pylearnplay/lessons/pythonpage5.dart'; // Import the next page file
+import 'package:pylearnplay/lessons/pythonpage6.dart';
 
-class Theory4Page extends StatelessWidget {
-  const Theory4Page({Key? key}) : super(key: key);
+class Theory5Page extends StatelessWidget {
+  const Theory5Page({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Theory 4: Understanding String Data Type"),
+        title: const Text("Theory 6: Understanding Boolean Data Type"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -17,7 +17,7 @@ class Theory4Page extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const Text(
-                "Understanding String Data Type",
+                "Understanding Boolean Data Type",
                 style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -25,12 +25,12 @@ class Theory4Page extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               const Text(
-                "In Python, the `str` data type is used to represent strings, which are sequences of characters.",
+                "In Python, the `bool` data type is used to represent Boolean values. Boolean values can be either true or false.",
                 style: TextStyle(fontSize: 18, color: Colors.black87),
               ),
               const SizedBox(height: 20),
               const Text(
-                "Examples of strings:",
+                "Examples of Boolean values:",
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -38,20 +38,21 @@ class Theory4Page extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               const Text(
-                "- 'Hello, World!'",
+                "- true",
                 style: TextStyle(fontSize: 18, color: Colors.black87),
               ),
               const Text(
-                "- 'Python is fun'",
-                style: TextStyle(fontSize: 18, color: Colors.black87),
-              ),
-              const Text(
-                "- '' (empty string)",
+                "- false",
                 style: TextStyle(fontSize: 18, color: Colors.black87),
               ),
               const SizedBox(height: 20),
               const Text(
-                "Operations on strings:",
+                "Boolean expressions are often used in decision-making and control flow statements.",
+                style: TextStyle(fontSize: 18, color: Colors.black87),
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                "Example of a Boolean expression:",
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -59,29 +60,20 @@ class Theory4Page extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               const Text(
-                "- Concatenation: 'Hello' + ' ' + 'World' = 'Hello World'",
-                style: TextStyle(fontSize: 18, color: Colors.black87),
-              ),
-              const Text(
-                "- Length: len('Python') = 6",
-                style: TextStyle(fontSize: 18, color: Colors.black87),
-              ),
-              const SizedBox(height: 20),
-              const Text(
-                "Understanding the `str` data type is essential for working with text and manipulating strings in your Python programs.",
+                "- `age >= 18`",
                 style: TextStyle(fontSize: 18, color: Colors.black87),
               ),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  // Navigate to the next page
+                  // Navigate to PythonPage6
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const PythonPage5()),
+                        builder: (context) => const PythonPage6()),
                   );
                 },
-                child: const Text("Next Page"),
+                child: const Text("Go to PythonPage6"),
               ),
             ],
           ),

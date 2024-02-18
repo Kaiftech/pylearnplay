@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:pylearnplay/theory/theory_3.dart';
+import 'package:pylearnplay/theory/theory_6.dart';
 
-class PythonPage3 extends StatefulWidget {
-  const PythonPage3({Key? key}) : super(key: key);
+class PythonPage6 extends StatefulWidget {
+  const PythonPage6({Key? key}) : super(key: key);
 
   @override
-  PythonPage3State createState() => PythonPage3State();
+  PythonPage6State createState() => PythonPage6State();
 }
 
-class PythonPage3State extends State<PythonPage3> {
+class PythonPage6State extends State<PythonPage6> {
   final List<String> dragData = [
     ""
   ]; // Only one element for the single blank box
@@ -27,7 +27,7 @@ class PythonPage3State extends State<PythonPage3> {
           children: [
             const Text(
               "Guess the data type of the variable:\n"
-              "variable = 42",
+              "variable = 3.14",
               style: TextStyle(fontSize: 16),
             ),
             const SizedBox(height: 10),
@@ -41,7 +41,7 @@ class PythonPage3State extends State<PythonPage3> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
-                        "variable = 42\n"
+                        "variable = 3.14\n"
                         "data type = ",
                         style: TextStyle(fontSize: 18),
                       ),
@@ -97,32 +97,28 @@ class PythonPage3State extends State<PythonPage3> {
   }
 
   Widget _buildDragTarget() {
-    return Container(
-      margin: const EdgeInsets.only(
-          right: 60, top: 22), // Adjust left and top values to shift
-      child: SizedBox(
-        width: 60, // Adjust the width as needed
-        child: DragTarget<String>(
-          builder: (context, candidateData, rejectedData) {
-            return Container(
-              height: 30,
-              color: const Color.fromARGB(255, 255, 255, 255),
-              alignment: Alignment.center,
-              child: Text(
-                dragData[0],
-                style: const TextStyle(fontSize: 18, color: Colors.black),
-              ),
-            );
-          },
-          onAccept: (data) {
-            setState(() {
-              dragData[0] = data;
-              if (_isCorrect()) {
-                isSuccessful = true;
-              }
-            });
-          },
-        ),
+    return SizedBox(
+      width: 80, // Adjust the width as needed
+      child: DragTarget<String>(
+        builder: (context, candidateData, rejectedData) {
+          return Container(
+            height: 60,
+            color: Colors.white,
+            alignment: Alignment.center,
+            child: Text(
+              dragData[0],
+              style: const TextStyle(fontSize: 18, color: Colors.black),
+            ),
+          );
+        },
+        onAccept: (data) {
+          setState(() {
+            dragData[0] = data;
+            if (_isCorrect()) {
+              isSuccessful = true;
+            }
+          });
+        },
       ),
     );
   }
@@ -159,7 +155,7 @@ class PythonPage3State extends State<PythonPage3> {
 
   // Function to check if the user's guess is correct
   bool _isCorrect() {
-    return dragData[0] == "int";
+    return dragData[0] == "float";
   }
 
   void _showCongratulatoryMessage(BuildContext context) {
@@ -173,10 +169,10 @@ class PythonPage3State extends State<PythonPage3> {
           actions: [
             TextButton(
               onPressed: () {
-                // Navigate to theory_3.dart
+                // Navigate to theory_6.dart
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const Theory3Page()),
+                  MaterialPageRoute(builder: (context) => const Theory6Page()),
                 );
               },
               child: const Text("OK"),
