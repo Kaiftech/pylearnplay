@@ -17,16 +17,42 @@ class PythonPage2State extends State<PythonPage2> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Chapter: Variables"),
+        backgroundColor: const Color(0xFF4285F4), // Set the background color
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Text(
-              "Welcome to the Python variables chapter!\n"
-              "Drag and drop the items to complete the code.",
-              style: TextStyle(fontSize: 14),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "🌟",
+                  style: TextStyle(
+                    fontSize: 40,
+                  ),
+                ),
+                SizedBox(width: 10),
+                Flexible(
+                  child: Text(
+                    "Welcome to the Python variables chapter!\n"
+                    "Drag and drop the items to complete the code.",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Color(0xFF4285F4),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 10),
+                Text(
+                  "🎉",
+                  style: TextStyle(
+                    fontSize: 24,
+                    color: Colors.green,
+                  ),
+                ),
+              ],
             ),
             const SizedBox(height: 5),
 
@@ -52,7 +78,8 @@ class PythonPage2State extends State<PythonPage2> {
             ),
 
             const Expanded(
-                child: SizedBox()), // Expanded to push other widgets to the top
+              child: SizedBox(),
+            ),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -83,15 +110,16 @@ class PythonPage2State extends State<PythonPage2> {
               ],
             ),
 
-            // "Finish" Button
-            if (isSuccessful)
-              ElevatedButton(
-                onPressed: () {
-                  // Show congratulatory message
-                  _showCongratulatoryMessage(context);
-                },
-                child: const Text("Finish"),
+            ElevatedButton(
+              onPressed: () {
+                // Show congratulatory message
+                _showCongratulatoryMessage(context);
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF4285F4),
               ),
+              child: const Text("Finish"),
+            ),
           ],
         ),
       ),
@@ -99,29 +127,31 @@ class PythonPage2State extends State<PythonPage2> {
   }
 
   Widget _buildDragTarget(int index) {
-    return DragTarget<String>(
-      builder: (context, candidateData, rejectedData) {
-        return Container(
-          height: 60,
-          width: 100,
-          color: Colors.white,
-          alignment: Alignment.center,
-          child: Text(
-            dragData[index] ?? "",
-            style: const TextStyle(fontSize: 18, color: Colors.black),
-          ),
-        );
-      },
-      onAccept: (data) {
-        setState(() {
-          dragData[index] = data;
-          if (dragData[0] == "42" && dragData[1] == "variable") {
-            isSuccessful = true;
-          } else {
-            isSuccessful = false;
-          }
-        });
-      },
+    return Expanded(
+      child: DragTarget<String>(
+        builder: (context, candidateData, rejectedData) {
+          return Container(
+            height: 60,
+            width: 100,
+            color: Colors.white,
+            alignment: Alignment.center,
+            child: Text(
+              dragData[index] ?? "",
+              style: const TextStyle(fontSize: 18, color: Colors.black),
+            ),
+          );
+        },
+        onAccept: (data) {
+          setState(() {
+            dragData[index] = data;
+            if (dragData[0] == "42" && dragData[1] == "variable") {
+              isSuccessful = true;
+            } else {
+              isSuccessful = false;
+            }
+          });
+        },
+      ),
     );
   }
 
@@ -155,7 +185,6 @@ class PythonPage2State extends State<PythonPage2> {
     );
   }
 
-  // Function to show congratulatory message
   void _showCongratulatoryMessage(BuildContext context) {
     showDialog(
       context: context,
@@ -166,7 +195,6 @@ class PythonPage2State extends State<PythonPage2> {
           actions: [
             TextButton(
               onPressed: () {
-                // After showing message, navigate to Theory1 page
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const Theory2()),
