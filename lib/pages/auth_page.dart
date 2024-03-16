@@ -1,8 +1,9 @@
 import 'package:pylearnplay/lessons/pythonpage1.dart';
-import 'forgot_password_page.dart';
 import 'package:pylearnplay/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'forgot_password_page.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({Key? key}) : super(key: key);
@@ -27,6 +28,7 @@ class AuthPageState extends State<AuthPage> {
   final _emailKey = GlobalKey<FormState>();
   final _passwordKey = GlobalKey<FormState>();
   final _confirmPasswordKey = GlobalKey<FormState>();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -336,14 +338,23 @@ class AuthPageState extends State<AuthPage> {
                                               context,
                                               size);
                                         } else {
-                                          // Navigate to PythonPage1 after successful registration
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const PythonPage1(),
-                                            ),
-                                          );
+                                          try {
+                                            await _auth
+                                                .createUserWithEmailAndPassword(
+                                              email: textfieldsStrings[2],
+                                              password: textfieldsStrings[3],
+                                            );
+                                            // Navigate to PythonPage1 after successful registration
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const PythonPage1(),
+                                              ),
+                                            );
+                                          } catch (e) {
+                                            // Handle registration errors
+                                          }
                                         }
                                       }
                                     }
@@ -354,13 +365,22 @@ class AuthPageState extends State<AuthPage> {
                               // validation for login
                               if (_emailKey.currentState!.validate()) {
                                 if (_passwordKey.currentState!.validate()) {
-                                  // Navigate to PythonPage1 after successful login
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const PythonPage1(),
-                                    ),
-                                  );
+                                  try {
+                                    await _auth.signInWithEmailAndPassword(
+                                      email: textfieldsStrings[2],
+                                      password: textfieldsStrings[3],
+                                    );
+                                    // Navigate to PythonPage1 after successful login
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const PythonPage1(),
+                                      ),
+                                    );
+                                  } catch (e) {
+                                    // Handle sign-in errors
+                                  }
                                 }
                               }
                             }

@@ -1,7 +1,7 @@
-import 'package:flutter/foundation.dart';
-import 'package:pylearnplay/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:pylearnplay/widgets/button_widget.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({Key? key}) : super(key: key);
@@ -12,8 +12,8 @@ class ForgotPasswordPage extends StatefulWidget {
 
 class ForgotPasswordPageState extends State<ForgotPasswordPage> {
   String email = '';
-
   final _emailKey = GlobalKey<FormState>();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -131,24 +131,17 @@ class ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       Padding(
                         padding: EdgeInsets.only(top: size.height * 0.025),
                         child: ButtonWidget(
-                            text: 'Send Instruction',
-                            backColor: isDarkMode
-                                ? [
-                                    Colors.black,
-                                    Colors.black,
-                                  ]
-                                : const [Color(0xff92A3FD), Color(0xff9DCEFF)],
-                            textColor: const [
-                              Colors.white,
-                              Colors.white,
-                            ],
-                            onPressed: () async {
-                              if (_emailKey.currentState!.validate()) {
-                                if (kDebugMode) {
-                                  print('$email forgot password');
-                                }
-                              }
-                            }),
+                          text: 'Send Instruction',
+                          backColor: isDarkMode
+                              ? [Colors.black, Colors.black]
+                              : const [Color(0xff92A3FD), Color(0xff9DCEFF)],
+                          textColor: const [Colors.white, Colors.white],
+                          onPressed: () async {
+                            if (_emailKey.currentState!.validate()) {
+                              resetPassword();
+                            }
+                          },
+                        ),
                       ),
                       Padding(
                         padding: EdgeInsets.only(top: size.height * 0.08),
@@ -263,6 +256,25 @@ class ForgotPasswordPageState extends State<ForgotPasswordPage> {
         ),
       ),
     );
+  }
+
+  void resetPassword() async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+      // Password reset email sent successfully
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Password reset instructions sent to $email"),
+        ),
+      );
+    } catch (e) {
+      // Error occurred, handle accordingly
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Failed to send password reset email"),
+        ),
+      );
+    }
   }
 
   ScaffoldFeatureController<SnackBar, SnackBarClosedReason> buildSnackError(
