@@ -95,28 +95,31 @@ class PythonPage5State extends State<PythonPage5> {
   }
 
   Widget _buildDragTarget() {
-    return SizedBox(
-      width: 80, // Adjust the width as needed
-      child: DragTarget<String>(
-        builder: (context, candidateData, rejectedData) {
-          return Container(
-            height: 60,
-            color: Colors.white,
-            alignment: Alignment.center,
-            child: Text(
-              dragData[0],
-              style: const TextStyle(fontSize: 18, color: Colors.black),
-            ),
-          );
-        },
-        onAccept: (data) {
-          setState(() {
-            dragData[0] = data;
-            if (_isCorrect()) {
-              isSuccessful = true;
-            }
-          });
-        },
+    return Container(
+      margin: const EdgeInsets.only(right: 60, top: 22),
+      child: SizedBox(
+        width: 60, // Set the width to match the first code snippet
+        child: DragTarget<String>(
+          builder: (context, candidateData, rejectedData) {
+            return Container(
+              height: 60,
+              color: Colors.white,
+              alignment: Alignment.center,
+              child: Text(
+                dragData[0],
+                style: const TextStyle(fontSize: 18, color: Colors.black),
+              ),
+            );
+          },
+          onAccept: (data) {
+            setState(() {
+              dragData[0] = data;
+              if (_isCorrect()) {
+                isSuccessful = true;
+              }
+            });
+          },
+        ),
       ),
     );
   }
